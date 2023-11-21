@@ -29,12 +29,15 @@ namespace DeanHelper
         /// <param name="uri">URI of HTTP GET Request</param>
         /// <param name="headerList">HTTP Headers</param>
         /// <returns>HTTPResponseMessage</returns>
-        public static async Task<HttpResponseMessage> Get(string uri, List<HTTPHeader> headerList)
+        public static async Task<HttpResponseMessage> Get(string uri, List<HTTPHeader> headerList, int timeout = 600)
         {
 #if DEBUG
             Console.WriteLine(String.Format("HTTP GET request to: {0}", uri));
 #endif
-            HttpClient httpClient = new HttpClient();
+            HttpClient httpClient = new HttpClient
+            {
+                Timeout = TimeSpan.FromSeconds(timeout)
+            };
 
             foreach (HTTPHeader header in headerList)
             {
